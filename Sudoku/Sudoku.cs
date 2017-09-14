@@ -9,13 +9,37 @@ namespace Sudoku
 {
     class Sudoku
     {
-        int[][] gamePlan;
+        int[][] gamePlan, solution;
         List<SudokuCell> sudokuCells;
         ISudokuInput sudokuInput = null;
         List<ISudokuOutput> sudokuOutputs = new List<ISudokuOutput>();
         string info;
 
-        int blockSize, cellsToSolve = 0;
+        int blockSize = defaultBlockSize, cellsToSolve = 0;
+        const int widthHeight = 9, defaultBlockSize = 3;
+
+        public Sudoku(string gamePlanString)
+        {
+            if (gamePlanString.Length != widthHeight * widthHeight)
+                throw new ArgumentOutOfRangeException($"The length of string must be {widthHeight * widthHeight} characters.");
+
+            int[][] gamePlan = new int[widthHeight][];
+
+            for (int i = 0; i < gamePlanString.Length; i++)
+            {
+                int row = i / widthHeight;
+                int col = i % widthHeight;
+                if (col == 0)
+                    gamePlan[row] = new int[widthHeight];
+
+
+                if (!int.TryParse(gamePlanString[i].ToString(), out int number))
+                    throw new ArgumentException("All characters in the string must be numbers.");
+                else
+                    gamePlan[row][col] = number;
+            }
+            InitSudoku(gamePlan, blockSize);
+        }
 
         public Sudoku(int[][] gamePlan, int blockSize, ISudokuOutput sudokuOutput)
         {
@@ -50,6 +74,57 @@ namespace Sudoku
             this.sudokuInput = sudokuInput;
             this.sudokuOutputs = sudokuOutputs;
             InitSudoku(gamePlan, blockSize);
+        }
+
+        public string BoardAsText
+        {
+            get
+            {
+                if (this.solution == null)
+                    throw new NullReferenceException("There is no solution available. Be sure to call method Solve() before calling method OutputSolution()");
+
+                StringBuilder stringBuilder=new StringBuilder();
+
+                
+                foreach (var row in solution)
+                {
+                    stringBuilder.Append("|");
+
+                    foreach (var item in row)
+                    {
+                        stringBuilder.Append($" {item} |");
+                    }
+                    stringBuilder.AppendLine();
+                }
+                if (info != null)
+                    stringBuilder.AppendLine($"\r\nInfo: {info}");
+
+                return stringBuilder.ToString();
+            }
+        }
+
+        public List<ISudokuOutput> SudokuOutputs
+        {
+            set
+            {
+                this.sudokuOutputs = value;
+            }
+        }
+
+        public ISudokuOutput SudokuOutput
+        {
+            set
+            {
+                this.sudokuOutputs.Add(value);
+            }
+        }
+
+        public ISudokuInput SudokuInput
+        {
+            set
+            {
+                this.sudokuInput = value;
+            }
         }
 
         private void InitSudoku(int[][] gamePlan, int blockSize)
@@ -113,22 +188,38 @@ namespace Sudoku
                         Sudoku newSudoku = new Sudoku(newGamePlan, this.sudokuInput, this.blockSize, this.sudokuOutputs);
                         int[][] resultNewGamePlan = newSudoku.Solve();
                         if (resultNewGamePlan != null)
+                        {
+                            this.solution = resultNewGamePlan;
                             return resultNewGamePlan;
+                        }
 
                     }
                     return null;
                 }
             }
 
-            foreach (ISudokuOutput sudokuOutput in sudokuOutputs)
-                sudokuOutput.Output(gamePlanSolved, this.info);
+            this.solution = gamePlanSolved;
 
             return gamePlanSolved;
 
         }
 
+        public void OutputSolution()
+        {
+            if (this.solution == null)
+                throw new NullReferenceException("There is no solution available. Be sure to call method Solve() before calling method OutputSolution()");
+            if (sudokuOutputs.Count > 0)
+                foreach (ISudokuOutput sudokuOutput in sudokuOutputs)
+                    sudokuOutput.Output(this.solution, this.info);
+            else
+                throw new NullReferenceException("There is no ISudokuOutput assigned to this sudoku.");
+        }
+
         public void OutputGameplan()
         {
+            if (this.sudokuOutputs.Count == 0)
+                throw new NullReferenceException("There is no ISudokuOutput assigned to this sudoku.");
+
             foreach (ISudokuOutput sudokuOutput in sudokuOutputs)
                 sudokuOutput.Output(gamePlan, this.info);
         }

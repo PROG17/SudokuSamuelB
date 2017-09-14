@@ -40,21 +40,30 @@ namespace Sudoku
             ConsoleOutput consoleOutput = new ConsoleOutput();
             //FileOutput fileOutput = new FileOutput("sudoku1.txt");
             //FileOutput fileOutput2 = new FileOutput("sudoku2.txt");
-            FileOutput fileOutputSudokuKryss = new FileOutput("SudokuKryss.txt");
+            //FileOutput fileOutputSudokuKryss = new FileOutput("SudokuKryss.txt");
 
             //FileInput fileInput = new FileInput("sudoku1.txt");
             //FileInput fileInput2 = new FileInput("sudoku2.txt");
             //FileInput fileInput3 = new FileInput("sudoku3.txt");
             //FileInput fileInput4 = new FileInput("sudoku4.txt");
-            SudokuKryssInput sudokuKryssInput = new SudokuKryssInput();
+            //SudokuKryssInput sudokuKryssInput = new SudokuKryssInput();
 
             //Sudoku sudoku1 = new Sudoku(3, fileInput, consoleOutput);
             //Sudoku sudoku2 = new Sudoku(3, fileInput2, consoleOutput);
             //Sudoku sudoku3 = new Sudoku(3, fileInput3, consoleOutput);
             //Sudoku sudoku4 = new Sudoku(3, fileInput4, consoleOutput);
-            Sudoku sudokuKryss = new Sudoku(3, sudokuKryssInput,
-                new List<ISudokuOutput> { consoleOutput, fileOutputSudokuKryss });
-
+            //Sudoku sudokuKryss = new Sudoku(3, sudokuKryssInput,
+            //    new List<ISudokuOutput> { consoleOutput, fileOutputSudokuKryss });
+            Sudoku sudoku5 = new Sudoku("070006950" +
+                                        "002000048" +
+                                        "000090703" +
+                                        "000960005" +
+                                        "050000020" +
+                                        "200081000" +
+                                        "406030000" +
+                                        "720000500" +
+                                        "018600070");
+            sudoku5.SudokuOutput = consoleOutput;
             //testfileinput.GetData();
             //Console.ReadKey();
             //Console.WriteLine("====Gameplan 1====\r\n");
@@ -72,8 +81,13 @@ namespace Sudoku
             //sudoku4.OutputGameplan();
             //Console.ReadKey();
 
+            //Console.WriteLine("====Sudokukryss====");
+            //sudokuKryss.OutputGameplan();
+
+            //Console.ReadKey();
+
             Console.WriteLine("====Sudokukryss====");
-            sudokuKryss.OutputGameplan();
+            sudoku5.OutputGameplan();
 
             Console.ReadKey();
 
@@ -93,8 +107,14 @@ namespace Sudoku
             //sudoku4.Solve();
             //Console.ReadKey();
 
+            //Console.WriteLine("\r\n====Solution for sudoku-kryss:====");
+            //sudokuKryss.Solve();
+            //Console.ReadKey();
+
             Console.WriteLine("\r\n====Solution for sudoku-kryss:====");
-            sudokuKryss.Solve();
+            sudoku5.Solve();
+            sudoku5.OutputSolution();
+            Console.WriteLine("\r\n\r\n" + sudoku5.BoardAsText);
             Console.ReadKey();
 
 
