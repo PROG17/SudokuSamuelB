@@ -37,7 +37,7 @@ namespace Sudoku
               new int[]  { 0,0,4,0,0,0,6,0,5 },
             };
 
-            ConsoleOutput consoleOutput = new ConsoleOutput();
+            //ConsoleOutput consoleOutput = new ConsoleOutput();
             //FileOutput fileOutput = new FileOutput("sudoku1.txt");
             //FileOutput fileOutput2 = new FileOutput("sudoku2.txt");
             //FileOutput fileOutputSudokuKryss = new FileOutput("SudokuKryss.txt");
@@ -63,7 +63,7 @@ namespace Sudoku
                                         "406030000" +
                                         "720000500" +
                                         "018600070");
-            sudoku5.SudokuOutput = consoleOutput;
+            //sudoku5.SudokuOutput = consoleOutput;
             //testfileinput.GetData();
             //Console.ReadKey();
             //Console.WriteLine("====Gameplan 1====\r\n");
@@ -86,10 +86,10 @@ namespace Sudoku
 
             //Console.ReadKey();
 
-            Console.WriteLine("====Sudokukryss====");
-            sudoku5.OutputGameplan();
+            //Console.WriteLine("====Sudokukryss====");
+            //sudoku5.OutputGameplan();
 
-            Console.ReadKey();
+            //Console.ReadKey();
 
             //Console.WriteLine("====Solution for sudoku 1:====");
             //sudoku1.Solve();
@@ -113,8 +113,10 @@ namespace Sudoku
 
             Console.WriteLine("\r\n====Solution for sudoku-kryss:====");
             sudoku5.Solve();
-            sudoku5.OutputSolution();
+            //sudoku5.OutputSolution();
             Console.WriteLine("\r\n\r\n" + sudoku5.BoardAsText);
+
+
             Console.ReadKey();
 
 

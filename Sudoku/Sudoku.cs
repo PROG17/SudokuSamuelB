@@ -83,19 +83,22 @@ namespace Sudoku
                 if (this.solution == null)
                     throw new NullReferenceException("There is no solution available. Be sure to call method Solve() before calling method OutputSolution()");
 
-                StringBuilder stringBuilder=new StringBuilder();
+                StringBuilder stringBuilder = new StringBuilder();
 
-                
-                foreach (var row in solution)
+                for (int row = 0; row < solution.Length; row++)
                 {
-                    stringBuilder.Append("|");
-
-                    foreach (var item in row)
+                    if (row % 3 == 0)
+                        stringBuilder.AppendLine(new string('-', widthHeight * 2 + 3));
+                    for (int col = 0; col < solution[row].Length; col++)
                     {
-                        stringBuilder.Append($" {item} |");
+                        if (col > 0 && col % 3 == 0)
+                            stringBuilder.Append("| ");
+                        stringBuilder.Append($"{solution[row][col]} ");
                     }
                     stringBuilder.AppendLine();
                 }
+                stringBuilder.AppendLine(new string('-', widthHeight * 2 + 3));
+
                 if (info != null)
                     stringBuilder.AppendLine($"\r\nInfo: {info}");
 
@@ -103,6 +106,7 @@ namespace Sudoku
             }
         }
 
+        
         public List<ISudokuOutput> SudokuOutputs
         {
             set
