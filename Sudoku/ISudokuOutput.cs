@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    interface ISudokuOutput
+    public interface ISudokuOutput
     {
         void Output(int[][] gamePlan, string info);
     }

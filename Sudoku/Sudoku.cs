@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sudoku
 {
-    class Sudoku
+    public class Sudoku
     {
         int[][] gamePlan, solution;
         List<SudokuCell> sudokuCells;
@@ -81,7 +81,7 @@ namespace Sudoku
             get
             {
                 if (this.solution == null)
-                    throw new NullReferenceException("There is no solution available. Be sure to call method Solve() before calling method OutputSolution()");
+                    return ("(no solution)");
 
                 StringBuilder stringBuilder = new StringBuilder();
 
